@@ -5,17 +5,31 @@ from model.medusa import MedusaHeads
 from decoding.speculative import SpeculativeDecoder
 from decoding.medusa_decoder import MedusaDecoder
 
-def test_speculative_decoding():
+def test_speculative_greedy_decoding():
     torch.manual_seed(42)
     target_model = GPTTransformer(vocab_size=200, d_model=128, n_layers=4, n_heads=4)
     draft_model = GPTTransformer(vocab_size=200, d_model=64, n_layers=2, n_heads=2)
     
-    spec_dec = SpeculativeDecoder(target_model, draft_model, gamma=3)
+    spec_dec = SpeculativeDecoder(target_model, draft_model, gamma=3, temperature=0.0)
     prompt = torch.randint(0, 200, (1, 8))
     
     gen, accept_rate = spec_dec.generate(prompt, max_new_tokens=12)
     assert gen.shape[1] >= 20
     assert 0.0 <= accept_rate <= 1.0
+
+def test_speculative_stochastic_rejection_sampling():
+    torch.manual_seed(42)
+    target_model = GPTTransformer(vocab_size=200, d_model=128, n_layers=4, n_heads=4)
+    draft_model = GPTTransformer(vocab_size=200, d_model=64, n_layers=2, n_heads=2)
+    
+    spec_dec = SpeculativeDecoder(target_model, draft_model, gamma=3, temperature=0.7)
+    prompt = torch.randint(0, 200, (1, 8))
+    
+    gen, accept_rate = spec_dec.generate(prompt, max_new_tokens=12)
+    assert gen.shape[1] >= 20
+    assert 0.0 <= accept_rate <= 1.0
+    # Ensure generated tokens are in valid vocabulary range
+    assert torch.all(gen >= 0) and torch.all(gen < 200)
 
 def test_medusa_decoding():
     torch.manual_seed(42)
