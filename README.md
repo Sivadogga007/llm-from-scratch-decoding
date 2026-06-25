@@ -1,6 +1,6 @@
 # LLM from Scratch → Advanced Decoding Optimization → Deployed
 
-[![CI & Quality Gate](https://github.com/Sivadogga007/08-llm-from-scratch-decoding/actions/workflows/ci.yml/badge.svg)](https://github.com/Sivadogga007/08-llm-from-scratch-decoding/actions/workflows/ci.yml)
+[![CI & Quality Gate](https://github.com/Sivadogga007/llm-from-scratch-decoding/actions/workflows/ci.yml/badge.svg)](https://github.com/Sivadogga007/llm-from-scratch-decoding/actions/workflows/ci.yml)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
